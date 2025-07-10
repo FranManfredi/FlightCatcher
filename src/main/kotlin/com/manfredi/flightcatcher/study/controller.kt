@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.atomic.AtomicLong
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/study")
 class GreetingController {
     init {
         println("✅ GreetingController se cargó correctamente")
@@ -23,4 +23,4 @@ class GreetingController {
         private const val template = "Hello, %s!"
     }
 }
-// This code defines a REST controller in a Spring Boot application that provides a greeting message.
+

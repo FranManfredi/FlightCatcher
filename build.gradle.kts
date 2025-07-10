@@ -21,15 +21,18 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client") // ← esta es la que faltaba ✅
     implementation("com.nimbusds:nimbus-jose-jwt:9.37.3")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("one.stayfocused.spring:dotenv-spring-boot:1.0.0")
+
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    implementation("io.github.cdimascio:dotenv-spring-boot:3.0.0")
 }
 
 
