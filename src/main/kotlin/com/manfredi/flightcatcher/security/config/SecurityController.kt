@@ -16,7 +16,7 @@ class AuthController(
 ) {
 
     @GetMapping("/token")
-    fun emitirJwt(
+    fun emitJwt(
             @AuthenticationPrincipal principal: OAuth2User?,
             response: HttpServletResponse
     ) {
