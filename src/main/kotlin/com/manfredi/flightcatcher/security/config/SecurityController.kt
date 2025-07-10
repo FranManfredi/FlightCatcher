@@ -1,23 +1,31 @@
 package com.manfredi.flightcatcher.security.config
 
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.Customizer
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.web.SecurityFilterChain
+import jakarta.servlet.http.HttpServletResponse
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.core.user.OAuth2User
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
-@Configuration
-class SecurityConfig {
+@RestController
+@RequestMapping("/auth")
+class AuthController(
+        @Value("\${app.custom.schema}") private val customSchema: String,
+        private val jwtService: JwtService
+) {
 
-    @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http
-                .authorizeHttpRequests {
-                    it
-                            .requestMatchers("/", "/login/**", "/error").permitAll()
-                            .anyRequest().authenticated()
-                }
-                .oauth2Login(Customizer.withDefaults()) // <- importante para habilitar login con Google
-        return http.build()
+    @GetMapping("/token")
+    fun emitirJwt(
+            @AuthenticationPrincipal principal: OAuth2User,
+            response: HttpServletResponse
+    ) {
+        val email = principal.getAttribute<String>("email") ?: "unknown"
+        val id = principal.getAttribute<String>("sub") ?: principal.name
+        val jwt = jwtService.generateToken(id, email)
+
+        // Redirigí al esquema personalizado de la app iOS
+        val url = "${customSchema}://oauth-callback?token=$jwt"
+        response.sendRedirect(url)
     }
 }
