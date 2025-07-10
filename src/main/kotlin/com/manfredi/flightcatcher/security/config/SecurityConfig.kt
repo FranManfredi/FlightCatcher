@@ -25,7 +25,7 @@ class SecurityConfig {
                             .requestMatchers("/", "/login/**", "/error").permitAll()
                             .anyRequest().authenticated()
                 }
-                .oauth2Login(oauth2LoginCustomizer()) // <- importante para habilitar login con Google
+                .oauth2Login(oauth2LoginCustomizer())
         return http.build()
     }
 }

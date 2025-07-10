@@ -21,7 +21,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-client") // ← esta es la que faltaba ✅
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("com.nimbusds:nimbus-jose-jwt:9.37.3")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("one.stayfocused.spring:dotenv-spring-boot:1.0.0")
