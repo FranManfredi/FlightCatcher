@@ -17,9 +17,13 @@ class AuthController(
 
     @GetMapping("/token")
     fun emitirJwt(
-            @AuthenticationPrincipal principal: OAuth2User,
+            @AuthenticationPrincipal principal: OAuth2User?,
             response: HttpServletResponse
     ) {
+        if (principal == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No authenticated user")
+            return
+        }
         val email = principal.getAttribute<String>("email") ?: "unknown"
         val id = principal.getAttribute<String>("sub") ?: principal.name
         val jwt = jwtService.generateToken(id, email)

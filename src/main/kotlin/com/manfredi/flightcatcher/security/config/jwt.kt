@@ -1,5 +1,6 @@
 package com.manfredi.flightcatcher.security.config
 
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
@@ -27,5 +28,17 @@ class JwtService(
                 .claim("email", email)
                 .signWith(key)
                 .compact()
+    }
+
+    fun parseToken(token: String): Claims? {
+        return try {
+            Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .body
+        } catch (e: Exception) {
+            null
+        }
     }
 }
